@@ -24,7 +24,7 @@ namespace ProbabilityApp
             cpuLabel.Text = "CPU Name: " + ProcessorInfo.sharedInstance.CPUName;
             ctLabel.Text = "Cores/Threads: " + ProcessorInfo.sharedInstance.Cores + "C/" + ProcessorInfo.sharedInstance.Threads + "T";
             clockLabel.Text = "Clock Speed: " + ProcessorInfo.sharedInstance.MHz + " MHz";
-            VersionLabel.Text = "Version 1.0.0.1 - By Daniel Dalton.";
+            VersionLabel.Text = "Version 1.0.0.2 - By Daniel Dalton.";
             AcceptButton = button1;
             F_FormClosed(null, null);
         }
@@ -119,6 +119,17 @@ namespace ProbabilityApp
         {
             threadedEValueUpdater();
             label1.Text = "End condition: " + ExpManager.sharedInstance.endCondition.ToString();
+            if (ExpManager.sharedInstance.endCondition.condition == EndCondition.ConditionType.PATTERN)
+            {
+                numericUpDown2.Value = 1;
+                numericUpDown2.Enabled = false;
+                ExpManager.sharedInstance.threads = 1;
+            } else
+            {
+                numericUpDown2.Enabled = true;
+                numericUpDown2.Value = Environment.ProcessorCount;
+                ExpManager.sharedInstance.threads = Environment.ProcessorCount;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -174,7 +185,7 @@ public static class Prompt
             StartPosition = FormStartPosition.CenterScreen,
             DialogResult = DialogResult.Cancel
         };
-        Label textLabel = new Label() { Left = 50, Top = 20, Text = text, Width = 400 };
+        Label textLabel = new Label() { Left = 50, Top = 20, Text = text, Width = 400, Height = 50 };
         TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 };
         Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 70, DialogResult = DialogResult.OK };
         confirmation.Click += (sender, e) => { prompt.Close(); };

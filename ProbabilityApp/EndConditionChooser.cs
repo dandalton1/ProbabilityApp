@@ -41,10 +41,11 @@ namespace ProbabilityApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectedIndex > 0)
+            Console.WriteLine("Selected index: " + (listBox1.SelectedIndex + 1));
+            if (listBox1.SelectedIndex + 1 >= 0)
             {
                 listBox1.Items.Remove(listBox1.SelectedItem);
-                ExpManager.sharedInstance.endCondition.rmPatternItem(listBox1.SelectedIndex);
+                ExpManager.sharedInstance.endCondition.rmPatternItem(listBox1.SelectedIndex + 1);
                 Console.WriteLine("REMOVED ITEM");
                 ExpManager.sharedInstance.endCondition.dispPattern();
             }

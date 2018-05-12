@@ -1,0 +1,28 @@
+RELEASE 1.0.0.2
+----------------------------------
+
+LaTeX and HTML output fixes:
+
+- Fixed a bug where minimum reps/second and minimum reps/second would report as
+zero.
+- Fixed a bug where minimum and maximum reps/second were swapped.
+- Fixed a bug where, if the time taken to do all trials was less than a second,
+the program would attempt to divide by zero and no file would be written out.
+This has been fixed by checking to see if it was equal to approximately zero
+first, then, if the experiment end condition was an amount of repetitions,
+use the value for decimal.MaxValue. If it was a pattern, it uses Positive
+Infinity instead.
+
+
+LaTeX specific fixes:
+
+- Fixed an issue where the text for the name prompt wouldn't appear
+to have two lines when it should.
+
+
+Pattern End Condition fixes:
+
+- Multi-threading is now disabled, as additional threads will incorrectly
+inflate the total rep count.
+- Although indexing is still a bit odd in the End Condition Chooser;
+you can now remove the zeroth index item on the list without any problems.

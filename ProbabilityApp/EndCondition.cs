@@ -70,7 +70,14 @@ public class EndCondition
         Console.Write("Pattern: [");
         for (int i = 0; i < pattern.Length; i++)
         {
-            Console.Write(pattern[i] + ", ");
+            if (i == pattern.Length - 1)
+            {
+                Console.Write(pattern[i]);
+            }
+            else
+            {
+                Console.Write(pattern[i] + ", ");
+            }
         }
         Console.Write("]");
         Console.WriteLine();

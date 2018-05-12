@@ -159,7 +159,14 @@ namespace ProbabilityApp
                         totalReps += resultObjects[i].repCount;
                         totalTimeTaken += (decimal)resultObjects[i].timeTaken;
                     }
-                    repsPerSec = (totalReps * 1000) / totalTimeTaken;
+                    if (totalTimeTaken != 0)
+                    {
+                        repsPerSec = (totalReps * 1000) / totalTimeTaken;
+                    }
+                    else
+                    {
+                        repsPerSec = decimal.MaxValue;
+                    }
                     s.WriteLine("<p>Total experiment repetitions: " + totalReps.ToString("n", n) + "</p>");
                     s.WriteLine("<p>Time taken for all trials, total, in HH:MM:SS format: " + TimeSpan.FromMilliseconds((double)totalTimeTaken).ToString() + "</p>");
                     s.WriteLine("<p>Average amount of repetitions per second: " + repsPerSec.ToString("n", nFloat) + "</p>");
@@ -265,10 +272,10 @@ namespace ProbabilityApp
                     {
                         double[] deviationsRPS = { 0, 0, 0 };
                         double[] deviationsReps = { 0, 0, 0 };
-                        double minRPS = 0;
-                        double maxRPS = 0;
-                        double minReps = 0;
-                        double maxReps = 0;
+                        double minRPS = resultObjects[0].repsPerSecond;
+                        double maxRPS = resultObjects[0].repsPerSecond;
+                        double minReps = resultObjects[0].repCount;
+                        double maxReps = resultObjects[0].repCount;
                         for (int i = 0; i < resultObjects.Length; i++)
                         {
                             sigmaReps += (resultObjects[i].repCount - eValueReps) * (resultObjects[i].repCount - eValueReps);
@@ -294,13 +301,14 @@ namespace ProbabilityApp
                         sigmaRPS /= (resultObjects.Length - 1);
                         sigmaReps = Math.Sqrt(sigmaReps);
                         sigmaRPS = Math.Sqrt(sigmaRPS);
+                        s.WriteLine("<br />"); // insert a newline before this info
                         s.WriteLine("<p>Standard deviation of repetitions per trial: " + sigmaReps.ToString("n", nFloat) + "</p>");
                         s.WriteLine("<p>Maximum repetitions per trial: " + maxReps.ToString("n", nFloat) + "</p>");
                         s.WriteLine("<p>Minimum repetitions per trial: " + minReps.ToString("n", nFloat) + "</p>");
                         s.WriteLine("<br />"); // insert a newline before this info
                         s.WriteLine("<p>Standard deviation of repetitions per second: " + sigmaRPS.ToString("n", nFloat) + "</p>");
-                        s.WriteLine("<p>Maximum repetitions per second: " + minRPS.ToString("n", nFloat) + "</p>");
-                        s.WriteLine("<p>Minimum repetitions per second: " + maxRPS.ToString("n", nFloat) + "</p>");
+                        s.WriteLine("<p>Maximum repetitions per second: " + maxRPS.ToString("n", nFloat) + "</p>");
+                        s.WriteLine("<p>Minimum repetitions per second: " + minRPS.ToString("n", nFloat) + "</p>");
                         foreach (Results r in resultObjects)
                         {
                             for (double i = 1; i < 4; i++)
@@ -372,7 +380,14 @@ namespace ProbabilityApp
                         totalReps += resultObjects[i].repCount;
                         totalTimeTaken += resultObjects[i].timeTaken;
                     }
-                    repsPerSec = (totalReps * 1000) / totalTimeTaken;
+                    if (totalTimeTaken != 0)
+                    {
+                        repsPerSec = (totalReps * 1000) / totalTimeTaken;
+                    }
+                    else
+                    {
+                        repsPerSec = double.PositiveInfinity;
+                    }
                     double eValueReps = totalReps / resultObjects.Length;
                     s.WriteLine("<p>Total experiment repetitions: " + totalReps.ToString("n", n) + "</p>");
                     s.WriteLine("<p>Time taken for all trials, total, in HH:MM:SS format: " + TimeSpan.FromMilliseconds((double)totalTimeTaken).ToString() + "</p>");
@@ -550,7 +565,14 @@ namespace ProbabilityApp
                         totalReps += resultObjects[i].repCount;
                         totalTimeTaken += (decimal)resultObjects[i].timeTaken;
                     }
-                    repsPerSec = (totalReps * 1000) / totalTimeTaken;
+                    if (totalTimeTaken != 0)
+                    {
+                        repsPerSec = (totalReps * 1000) / totalTimeTaken;
+                    }
+                    else
+                    {
+                        repsPerSec = decimal.MaxValue;
+                    }
                     s.WriteLine("Total experiment repetitions: " + totalReps.ToString("n", n) + "\\\\");
                     s.WriteLine("Time taken for all trials, total, in HH:MM:SS format: " + TimeSpan.FromMilliseconds((double)totalTimeTaken).ToString() + "\\\\");
                     s.WriteLine("Average amount of repetitions per second: " + repsPerSec.ToString("n", nFloat) + "\\\\");
@@ -655,10 +677,10 @@ namespace ProbabilityApp
                     {
                         double[] deviationsRPS = { 0, 0, 0 };
                         double[] deviationsReps = { 0, 0, 0 };
-                        double minRPS = 0;
-                        double maxRPS = 0;
-                        double minReps = 0;
-                        double maxReps = 0;
+                        double minRPS = resultObjects[0].repsPerSecond;
+                        double maxRPS = resultObjects[0].repsPerSecond;
+                        double minReps = resultObjects[0].repCount;
+                        double maxReps = resultObjects[0].repCount;
                         for (int i = 0; i < resultObjects.Length; i++)
                         {
                             sigmaReps += (resultObjects[i].repCount - eValueReps) * (resultObjects[i].repCount - eValueReps);
@@ -682,13 +704,14 @@ namespace ProbabilityApp
                         sigmaRPS /= (resultObjects.Length - 1);
                         sigmaReps = Math.Sqrt(sigmaReps);
                         sigmaRPS = Math.Sqrt(sigmaRPS);
+                        s.WriteLine("\\hfill \\break"); // insert a newline before this info
                         s.WriteLine("$\\sigma$ repetitions per trial: " + sigmaReps.ToString("n", nFloat) + "\\\\");
                         s.WriteLine("Maximum repetitions per trial: " + maxReps.ToString("n", nFloat) + "\\\\");
                         s.WriteLine("Minimum repetitions per trial: " + minReps.ToString("n", nFloat) + "\\\\");
                         s.WriteLine("\\hfill \\break"); // insert a newline before this info
                         s.WriteLine("$\\sigma$ of repetitions per second: " + sigmaRPS.ToString("n", nFloat) + "\\\\");
-                        s.WriteLine("Maximum repetitions per second: " + minRPS.ToString("n", nFloat) + "\\\\");
-                        s.WriteLine("Minimum repetitions per second: " + maxRPS.ToString("n", nFloat) + "\\\\");
+                        s.WriteLine("Maximum repetitions per second: " + maxRPS.ToString("n", nFloat) + "\\\\");
+                        s.WriteLine("Minimum repetitions per second: " + minRPS.ToString("n", nFloat) + "\\\\");
                         foreach (Results r in resultObjects)
                         {
                             for (double i = 1; i < 4; i++)
@@ -762,7 +785,14 @@ namespace ProbabilityApp
                         totalReps += resultObjects[i].repCount;
                         totalTimeTaken += resultObjects[i].timeTaken;
                     }
-                    repsPerSec = (totalReps * 1000) / totalTimeTaken;
+                    if (totalTimeTaken != 0)
+                    {
+                        repsPerSec = (totalReps * 1000) / totalTimeTaken;
+                    }
+                    else
+                    {
+                        repsPerSec = double.PositiveInfinity;
+                    }
                     double eValueReps = totalReps / resultObjects.Length;
                     s.WriteLine("Total experiment repetitions: " + totalReps.ToString("n", n) + "\\\\");
                     s.WriteLine("Time taken for all trials, total, in HH:MM:SS format: " + TimeSpan.FromMilliseconds((double)totalTimeTaken).ToString() + "\\\\");
